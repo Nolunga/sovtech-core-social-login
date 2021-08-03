@@ -1,0 +1,44 @@
+{
+  "name": "sovtech-core-social-login",
+  "version": "0.0.1",
+  "description": "SovTech Core social login package",
+  "repository": "https://github.com/Nolunga/sovtech-core-social-login.git",
+  "author": "Nolunga Ngcakane <nolungan@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "axios": "^0.21.1",
+    "expo-apple-authentication": "^3.2.1",
+    "expo-facebook": "^11.3.1",
+    "expo-google-sign-in": "^9.2.1"
+  },
+  "peerDependencies": {
+    "react-native-webview": "^11.6.2"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/npm": "^7.0.10",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "eslint": "^6.5.1",
+    "semantic-release": "^17.3.7"
+  },
+  "release": {
+    "branches": [
+      "develop"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ],
+      "@semantic-release/git"
+    ]
+  }
+}
