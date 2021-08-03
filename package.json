@@ -5,7 +5,17 @@
   "repository": "https://github.com/Nolunga/sovtech-core-social-login.git",
   "author": "Nolunga Ngcakane <nolungan@gmail.com>",
   "license": "MIT",
-  "private": false,
+  "keywords": [
+    "OAuth",
+    "SovTech",
+    "Social login",
+    "Facebook login",
+    "Instagram login",
+    "Google login",
+    "Apple login",
+    "React Native",
+    "React Native social login"
+  ],
   "dependencies": {
     "axios": "^0.21.1",
     "expo-apple-authentication": "^3.2.1",
@@ -21,8 +31,15 @@
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/npm": "^7.0.10",
     "@semantic-release/release-notes-generator": "^9.0.1",
-    "eslint": "^6.5.1",
-    "semantic-release": "^17.3.7"
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-native": "^3.8.1",
+    "prettier": "^2.0.5",
+    "semantic-release": "^17.3.7",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
+    "@typescript-eslint/parser": "^3.6.0"
   },
   "release": {
     "branches": [
