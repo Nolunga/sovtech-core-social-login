@@ -1,8 +1,9 @@
 import * as AppleAuthentication from 'expo-apple-authentication'
+import * as GoogleSignIn from 'expo-auth-session/providers/google'
 import * as Facebook from 'expo-facebook'
-import * as GoogleSignIn from 'expo-google-sign-in'
+import * as WebBrowser from 'expo-web-browser'
 import React, { useEffect, useState } from 'react'
-import { Image, Platform, TouchableOpacity, View } from 'react-native'
+import { AppState, Image, Platform, TouchableOpacity, View } from 'react-native'
 import LoginWithInstagram from './instagram'
 
 const appleLogo = require('./assets/images/apple.png')
@@ -10,10 +11,13 @@ const facebookLogo = require('./assets/images/facebook.png')
 const googleLogo = require('./assets/images/google.png')
 const instagramLogo = require('./assets/images/instagram.png')
 
+WebBrowser.maybeCompleteAuthSession()
+
 type Props = {
-  enableApple?: boolean
   enableInstagram?: boolean
-  googleClientId: string
+  googleExpoClientId: string
+  googleAndroidClientId: string
+  googleIosClientId: string
   facebookAppId: string
   instagramAppId?: string
   instagramAppSecret?: string
@@ -24,14 +28,15 @@ type Props = {
 }
 /**
  * SovTech Core social media login component
- * @param enableApple boolean to enable Apple sign in
+
  * @param enableInstagram boolean to enable Instagram sign in
  */
 
 const SocialAuth = ({
-  enableApple,
   enableInstagram,
-  googleClientId,
+  googleExpoClientId,
+  googleAndroidClientId,
+  googleIosClientId,
   facebookAppId,
   instagramAppId,
   instagramAppSecret,
@@ -41,15 +46,12 @@ const SocialAuth = ({
   onCancel
 }: Props) => {
   const isAndroid = Platform.OS === 'android'
-  useEffect(() => {
-    const initGoogle = async () => {
-      await GoogleSignIn.initAsync({
-        clientId: googleClientId,
-        scopes: ['profile', 'email']
-      })
-    }
-    initGoogle()
-  }, [])
+
+  const [_, response, promptAsync] = GoogleSignIn.useAuthRequest({
+    expoClientId: googleExpoClientId,
+    androidClientId: googleAndroidClientId,
+    iosClientId: googleIosClientId
+  })
 
   const facebookAuth = async () => {
     try {
@@ -60,24 +62,26 @@ const SocialAuth = ({
       if (type === 'success') {
         return onSignInSuccess('facebook', token as string)
       } else {
-        return onError && onError('A unknown error occured')
+        return onError && onError('An unknown error has occured')
       }
     } catch (error) {
       return onError && onError(error.message)
     }
   }
 
-  const googleAuth = async () => {
-    try {
-      await GoogleSignIn.askForPlayServicesAsync()
-      const { type, user } = await GoogleSignIn.signInAsync()
-      if (type === 'success') {
-        return onSignInSuccess('google', user?.auth?.accessToken as string)
-      }
-    } catch ({ message }) {
-      return onError && onError(message)
+  const googleAuth = async (response) => {
+    if (response.type === 'success') {
+      return onSignInSuccess('google', response.authentication?.accessToken as string)
+    } else {
+      return onError && onError('An unknown error has occured')
     }
   }
+
+  useEffect(() => {
+    if (response && AppState.currentState === 'active') {
+      googleAuth(response)
+    }
+  }, [response, AppState.currentState])
 
   const appleAuth = async () => {
     try {
@@ -116,7 +120,7 @@ const SocialAuth = ({
         <Image source={facebookLogo} style={{ height: 50, width: 50 }} />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={googleAuth}>
+      <TouchableOpacity onPress={promptAsync}>
         <Image source={googleLogo} style={{ height: 50, width: 50 }} />
       </TouchableOpacity>
 
@@ -126,7 +130,7 @@ const SocialAuth = ({
         </TouchableOpacity>
       )}
 
-      {enableApple && !isAndroid && (
+      {!isAndroid && (
         <TouchableOpacity onPress={appleAuth}>
           <Image source={appleLogo} style={{ height: 50, width: 50 }} />
         </TouchableOpacity>
