@@ -1,4 +1,4 @@
-# SOVTECH-CORE-SOCIAL-LOGIN
+# EXPO-SOCIAL-LOGIN
 
 an awesome social login component for expo with Google, Facebook, Apple and Instagram
 
@@ -18,19 +18,19 @@ an awesome social login component for expo with Google, Facebook, Apple and Inst
 using yarn
 
 ```
-yarn add sovtech-core-social-login
+yarn add expo-social-login
 ```
 
 using npm
 
 ```
-npm install sovtech-core-social-login
+npm install expo-social-login
 ```
 
 ### Use it in your login/register screen
 
 ```
-import SocialLogin from 'sovtech-core-social-login'
+import SocialLogin from 'expo-social-login'
 ...
    <SocialLogin
         enableInstagram
