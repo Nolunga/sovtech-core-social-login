@@ -1,4 +1,11 @@
-# EXPO-SOCIAL-LOGIN
+# DEPRECATED
+
+ ## updated package can be found here https://www.npmjs.com/package/expo-social-login 
+ ## updated repo can here https://github.com/Nolunga/expo-social-login   
+
+
+# SOVTECH-CORE-SOCIAL-LOGIN
+
 
 an awesome social login component for expo with Google, Facebook, Apple and Instagram
 
